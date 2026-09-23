@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1c0f14" />
+<title>Para Vos ❤️ — Nuestra Historia</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='18' font-size='18'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ======= PANTALLA DE CARGA ======= -->
+  <div id="loader" class="loader">
+    <div class="loader-heart">❤</div>
+    <p class="loader-text">reuniendo nuestros recuerdos…</p>
+    <div class="loader-bar"><span id="loader-fill"></span></div>
+    <p class="loader-pct" id="loader-pct">0%</p>
+  </div>
+
+  <!-- ======= INTRO ======= -->
+  <section id="intro" class="intro hide">
+    <div class="intro-glow"></div>
+    <p class="intro-kicker">una historia escrita por nosotros<br />un capítulo para vos</p>
+    <h1 class="intro-title">
+      <span class="it-hello">Feliz</span>
+      <span class="it-name" id="intro-name">Cumpleaños</span>
+    </h1>
+    <div class="intro-divider">◈</div>
+    <p class="intro-sub" id="intro-sub">Hoy el mundo cumple un año más de belleza,
+    porque hoy cumple años la razón de que sonría todos los días.</p>
+    <button id="intro-btn" class="intro-btn">Comenzar nuestro viaje ✨</button>
+    <div class="intro-hint">presiona para entrar</div>
+  </section>
+
+  <!-- ======= ESCENARIO / CARRUSEL ======= -->
+  <main id="stage" class="stage hide">
+
+    <div class="hearts" aria-hidden="true"></div>
+    <div class="bokeh" aria-hidden="true"></div>
+
+    <!-- Contador de capítulos -->
+    <header class="topbar">
+      <div class="chapter" id="chapter-label">Capítulo I</div>
+      <div class="counter"><span id="cnum">01</span><span class="counter-total" id="ctot">/ 48</span></div>
+    </header>
+
+    <div class="viewport">
+      <div id="track" class="track"><!-- slides inyectados por JS --></div>
+    </div>
+
+    <!-- Navegación -->
+    <button id="prev" class="nav nav-prev" aria-label="Anterior">‹</button>
+    <button id="next" class="nav nav-next" aria-label="Siguiente">›</button>
+    <button id="mute" class="nav mute" aria-label="Sonido">🔇</button>
+    <button id="musicBtn" class="nav music" aria-label="Música">♫</button>
+
+    <audio id="musica" src="media/music.mp3" loop preload="auto"></audio>
+
+    <div class="dots" id="dots"></div>
+    <div class="progressbar"><span id="progressfill"></span></div>
+    <div class="swipehint">deslizá para continuar →</div>
+  </main>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
