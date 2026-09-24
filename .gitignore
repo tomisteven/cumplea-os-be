@@ -1,3 +1,6 @@
+# originales pesados (HEIC/MOV crudos) — no subir a GitHub
+BE/
+
 # medios convertidos (web) — se regeneran con convert.py
 web/media/
 
