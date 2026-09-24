@@ -1,0 +1,10 @@
+# medios convertidos (web) — se regeneran con convert.py
+web/media/
+
+# python
+__pycache__/
+*.py[cod]
+
+# sistema
+.DS_Store
+Thumbs.db
