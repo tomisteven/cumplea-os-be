@@ -325,6 +325,25 @@
       }
       grid.appendChild(cell);
     });
+
+    // En móvil, ajustar el grid a 1-2 columnas
+    const adjustGrid = () => {
+      if (window.innerWidth <= 480) {
+        if (n <= 2) grid.style.gridTemplateColumns = "1fr";
+        else if (n <= 4) grid.style.gridTemplateColumns = "repeat(2,1fr)";
+        else if (n <= 6) grid.style.gridTemplateColumns = "repeat(2,1fr)";
+        else grid.style.gridTemplateColumns = "repeat(3,1fr)";
+      } else if (window.innerWidth <= 840) {
+        if (n <= 2) grid.style.gridTemplateColumns = "repeat(2,1fr)";
+        else if (n <= 4) grid.style.gridTemplateColumns = "repeat(2,1fr)";
+        else if (n <= 6) grid.style.gridTemplateColumns = "repeat(3,1fr)";
+        else grid.style.gridTemplateColumns = "repeat(3,1fr)";
+      } else {
+        grid.style.gridTemplateColumns = cols;
+      }
+    };
+    adjustGrid();
+    window.addEventListener("resize", adjustGrid);
   }
 
   function buildDots() {

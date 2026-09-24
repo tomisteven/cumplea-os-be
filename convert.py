@@ -29,7 +29,7 @@ def slug(name, ext):
 
 def img_sort_key(name):
     base = os.path.splitext(name)[0]
-    m = re.match(r"IMG_(\d+)", base)
+    m = re.match(r"(\d+)", base)
     if m:
         return (0, int(m.group(1)))
     return (1, base)
@@ -37,24 +37,24 @@ def img_sort_key(name):
 
 def vid_sort_key(name):
     base = os.path.splitext(name)[0]
-    m = re.match(r"IMG_(\d+)", base)
+    m = re.match(r"(\d+)", base)
     return int(m.group(1)) if m else 99999
 
 
 manifest = []
 processed = skipped = failed = 0
+img_counter = 0
+vid_counter = 0
 
 # ---------- imágenes ----------
 for name in sorted(os.listdir(SRC), key=img_sort_key):
     ext = os.path.splitext(name)[1].lower()
     if ext not in IMG_EXT:
         continue
+    img_counter += 1
     is_avif = ext == ".avif"
-    if is_avif:
-        # AVIF se deja en su formato nativo (mejor calidad/peso) + respaldo JPG
-        out = os.path.join(OUT_IMG, slug(name, "avif"))
-    else:
-        out = os.path.join(OUT_IMG, slug(name, "jpg"))
+    out_ext = "avif" if is_avif else "jpg"
+    out = os.path.join(OUT_IMG, f"{img_counter}.{out_ext}")
     if not os.path.exists(out):
         try:
             im = Image.open(os.path.join(SRC, name))
@@ -67,7 +67,7 @@ for name in sorted(os.listdir(SRC), key=img_sort_key):
             if is_avif:
                 im.save(out, "AVIF", quality=72)
                 # respaldo JPG para navegadores sin soporte AVIF
-                jpg_out = os.path.join(OUT_IMG, slug(name, "jpg"))
+                jpg_out = os.path.join(OUT_IMG, f"{img_counter}.jpg")
                 if not os.path.exists(jpg_out):
                     flat = im
                     if im.mode == "RGBA":
@@ -86,14 +86,15 @@ for name in sorted(os.listdir(SRC), key=img_sort_key):
     else:
         skipped += 1
         print("IMG ok", name)
-    manifest.append({"type": "img", "src": "media/img/" + slug(name, "avif" if is_avif else "jpg"), "file": name})
+    manifest.append({"type": "img", "src": f"media/img/{img_counter}.{out_ext}", "file": name})
 
 # ---------- videos ----------
 for name in sorted(os.listdir(SRC), key=vid_sort_key):
     ext = os.path.splitext(name)[1].lower()
     if ext not in VID_EXT:
         continue
-    out = os.path.join(OUT_VID, slug(name, "mp4"))
+    vid_counter += 1
+    out = os.path.join(OUT_VID, f"{vid_counter}.mp4")
     if not os.path.exists(out) or os.path.getsize(out) < 10000:
         r = subprocess.run(
             [FF, "-y", "-i", os.path.join(SRC, name),
@@ -111,7 +112,7 @@ for name in sorted(os.listdir(SRC), key=vid_sort_key):
     else:
         skipped += 1
         print("VID ok", name)
-    manifest.append({"type": "vid", "src": "media/vid/" + slug(name, "mp4"), "file": name})
+    manifest.append({"type": "vid", "src": f"media/vid/{vid_counter}.mp4", "file": name})
 
 with open(os.path.join(ROOT, "web", "manifest.json"), "w", encoding="utf-8") as f:
     json.dump(manifest, f, ensure_ascii=False, indent=1)
